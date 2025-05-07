@@ -1,0 +1,58 @@
+.modal__image {
+  width: 498px;
+  height: 498px;
+}
+
+.modal__content_type_image {
+  padding: 0;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+}
+
+.modal__footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  background-color: white;
+  padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.modal__caption {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  font-family: "Cabinet Grotesk Regular", "Times New Roman", Times, sans-serif;
+  margin-left: 32px;
+  width: 36px;
+  height: 24px;
+}
+
+.modal__weather {
+  font-family: "Cabinet Grotesk Regular", "Times New Roman", Times, sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 24px;
+  margin-top: 0;
+  margin-left: 32px;
+  margin-bottom: 12px;
+  padding-bottom: 32px;
+  width: 155px;
+  height: 24px;
+}
+
+.modal__close_type-item {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  background-image: url(../../assets/Item-modal-close.svg);
+}

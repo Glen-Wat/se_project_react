@@ -1,0 +1,30 @@
+.card {
+  width: 323px;
+  position: relative;
+  display: flex;
+  border: 1px solid;
+  justify-content: center;
+  border-color: rgb(0, 0, 0, 0.3);
+  border-radius: 19px;
+}
+
+.card__name {
+  position: absolute;
+  top: 15px;
+  margin: 0;
+  padding: 2px 12px 2px;
+  background-color: #ffff;
+  max-width: 73px;
+  max-height: 24px;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 20px;
+  border-radius: 4px;
+  font-family: "Cabinet Grotesk Bold", "Times New Roman", Times, sans-serif;
+  color: rgb(0, 0, 0, 0.6);
+}
+
+.card__image {
+  width: 100%;
+  border-radius: 19px;
+}

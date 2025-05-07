@@ -10,14 +10,37 @@
 
 .header__date-location {
   margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 24px;
+  font-family: "Cabinet Grotesk Bold", "Times New Roman", Times, sans-serif;
 }
 
 .header__add-clothes-btn {
   margin: 0 20px 0 auto;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 24px;
+  font-family: "Cabinet Grotesk Bold", "Times New Roman", Times, sans-serif;
+  border: none;
+  background: transparent;
+  transition: 0.4s;
+}
+
+.header__add-clothes-btn:hover {
+  cursor: pointer;
+  opacity: 0.7;
 }
 
 .header__user-container {
   display: flex;
   align-items: center;
   gap: 12px;
+}
+
+.header__username {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 100%;
+  font-family: "Cabinet Grotesk Bold", "Times New Roman", Times, sans-serif;
 }

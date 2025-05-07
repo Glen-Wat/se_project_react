@@ -7,3 +7,19 @@
   margin: 0 auto;
   padding: 0 20px;
 }
+
+.modal__label {
+  font-family: "Cabinet Grotesk Regular", "Times New Roman", Times, sans-serif;
+  font-weight: 700;
+  size: 16px;
+  line-height: 20px;
+  color: rgba(0, 0, 0, 1);
+}
+
+.modal__label_type_radio {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.modal__label_type_radio + .modal__radio-input:checked {
+  color: rgba(0, 0, 0, 1);
+}
