@@ -6,6 +6,7 @@
   justify-content: center;
   border-color: rgb(0, 0, 0, 0.3);
   border-radius: 19px;
+  cursor: pointer;
 }
 
 .card__name {
