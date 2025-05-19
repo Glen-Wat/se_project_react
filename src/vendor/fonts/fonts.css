@@ -7,7 +7,16 @@
 
 @font-face {
   font-family: "Cabinet Grotesk";
-  src: url("./fonts/CabinetGrotesk-Bold.woff") format("woff");
+  src: local("Cabinet Grotesk Bold"),
+    url("./CabinetGrotesk-Bold.woff") format("woff");
   font-weight: 700;
   font-style: normal;
+}
+
+@font-face {
+  font-family: "Cabinet Grotesk Thin";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Cabinet Grotesk Thin"),
+    url("./fonts/CabinetGrotesk-Thin.woff") format("woff");
 }

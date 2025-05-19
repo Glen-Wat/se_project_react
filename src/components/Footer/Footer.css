@@ -1,7 +1,11 @@
 .footer {
   display: flex;
+  justify-self: center;
   align-items: center;
   justify-content: space-between;
+  width: 1358px;
+
+  top: 778;
 }
 
 .footer__text {
