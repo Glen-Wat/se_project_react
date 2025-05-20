@@ -4,8 +4,9 @@
   align-items: center;
   justify-content: space-between;
   width: 1358px;
-
-  top: 778;
+  height: 20px;
+  top: 1040px;
+  margin-top: 176px;
 }
 
 .footer__text {
@@ -14,7 +15,6 @@
   line-height: 20px;
   margin: 0;
   font-family: "Cabinet Grotesk Regular", "Times New Roman", Times, sans-serif;
-  padding-top: 176px;
 }
 
 .footer__date {
@@ -23,5 +23,4 @@
   font-weight: 500;
   line-height: 20px;
   margin: 0;
-  padding-top: 176px;
 }

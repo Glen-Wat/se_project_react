@@ -45,7 +45,7 @@
   height: 24px;
 }
 
-.modal__close_type-item {
+.modal__close.modal__close_type-item {
   position: absolute;
   top: 20px;
   right: 20px;

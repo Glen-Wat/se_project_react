@@ -83,6 +83,10 @@
   background: rgba(0, 0, 0, 1);
 }
 
+.modal__label.modal__label_type_radio:checked {
+  color: rgba(0, 0, 0, 1);
+}
+
 .modal__submit {
   max-width: 124px;
   max-height: 36px;
