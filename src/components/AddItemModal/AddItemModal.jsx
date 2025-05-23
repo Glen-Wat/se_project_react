@@ -4,7 +4,7 @@ import { useState } from "react";
 
 export default function AddItemModal({ onClose, isOpen, onAddModalSubmit }) {
   const [name, setName] = useState("");
-  const [url, setUrl] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
   const [weather, setWeather] = useState("");
 
   const handleNameChange = (e) => {
@@ -12,7 +12,7 @@ export default function AddItemModal({ onClose, isOpen, onAddModalSubmit }) {
   };
 
   const handleUrlChange = (e) => {
-    setUrl(e.target.value);
+    setImageUrl(e.target.value);
   };
 
   const handleWeatherChange = (e) => {
@@ -21,9 +21,9 @@ export default function AddItemModal({ onClose, isOpen, onAddModalSubmit }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onAddModalSubmit({ name, url, weather });
+    onAddModalSubmit({ name, imageUrl, weather });
     setName("");
-    setUrl("");
+    setImageUrl("");
     setWeather("");
   };
 
@@ -58,7 +58,7 @@ export default function AddItemModal({ onClose, isOpen, onAddModalSubmit }) {
           placeholder="Image URL"
           required
           onChange={handleUrlChange}
-          value={url}
+          value={imageUrl}
         />
       </label>
       <fieldset className="modal__radio-buttons">

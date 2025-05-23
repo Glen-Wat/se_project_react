@@ -56,3 +56,23 @@
   height: 20px;
   background-image: url(../../assets/Item-modal-close.svg);
 }
+
+.modal__delete-item_btn {
+  border: none;
+  position: absolute;
+  background: transparent;
+  font-size: 20px;
+  font-weight: 700px;
+  line-height: 24px;
+  font-family: "Cabinet Grotesk Bold", "Times New Roman", Times, sans-serif;
+  color: #ff4d00;
+
+  width: 130px;
+  bottom: 109px;
+  left: 350px;
+}
+
+.modal__delete-item_btn:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}

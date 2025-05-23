@@ -44,3 +44,8 @@
   line-height: 100%;
   font-family: "Cabinet Grotesk Bold", "Times New Roman", Times, sans-serif;
 }
+
+.header__link {
+  text-decoration: none;
+  color: black;
+}

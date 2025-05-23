@@ -1,0 +1,54 @@
+.clothes-section__items {
+  width: 1015px;
+  height: 676px;
+  display: flex;
+
+  flex-wrap: wrap;
+  justify-content: center;
+
+  top: 176px;
+  left: 385px;
+  gap: 15px;
+}
+
+.clothes-section__content {
+  display: flex;
+  align-items: center;
+
+  gap: 15px;
+  margin-left: 50px;
+}
+
+.clothes-section__text {
+  font-size: 20px;
+  line-height: 100%;
+  font-weight: 700;
+  font-family: "Cabinet Grotesk Bold", "Times New Roman", Times, sans-serif;
+  margin-bottom: 16px;
+}
+
+.clothes-section__add-btn {
+  border: none;
+  background: transparent;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 100%;
+  font-family: "Cabinet Grotesk Bold", "Times New Roman", Times, sans-serif;
+  transition: 0.4s;
+  padding: 0;
+  margin-top: 7px;
+}
+
+.clothes-section__add-btn:hover {
+  cursor: pointer;
+  color: rgb(0, 0, 0, 0.6);
+}
+
+.clothes-section__cards-list {
+  display: flex;
+  flex-wrap: wrap;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  gap: 21px;
+}

@@ -1,0 +1,9 @@
+.profile {
+  display: inline-flex;
+}
+
+.profile__content {
+  display: flex;
+  flex-direction: row;
+  gap: 116px;
+}
