@@ -58,7 +58,7 @@ export default function AddItemModal({ onClose, isOpen, onAddModalSubmit }) {
           type="url"
           className="modal__input"
           id="imageUrl"
-          placeholder="Image URL"
+          placeholder="Image Url"
           required
           onChange={handleUrlChange}
           value={imageUrl}

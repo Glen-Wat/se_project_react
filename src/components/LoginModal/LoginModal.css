@@ -1,0 +1,29 @@
+.modal__actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.modal__actions-spacer {
+  flex: 0 0 auto;
+}
+
+.modal__switch-button {
+  background: none;
+  border: none;
+  color: #757575;
+  font-size: 1rem;
+  cursor: pointer;
+  text-decoration: none;
+  margin-left: 8px;
+  padding: 0;
+  transition: color 0.2s;
+}
+
+.modal__error {
+  color: #d32f2f;
+  font-size: 0.9rem;
+  margin-top: 4px;
+  display: block;
+}

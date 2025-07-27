@@ -7,6 +7,7 @@
   border-color: rgb(0, 0, 0, 0.3);
   border-radius: 19px;
   cursor: pointer;
+  max-height: 400px;
 }
 
 .card__name {
@@ -28,4 +29,19 @@
 .card__image {
   width: 100%;
   border-radius: 19px;
+}
+
+.item__like-button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.item__like-button_active {
+  background-image: url("../../assets/liked-icon.svg");
+  background-repeat: no-repeat;
+  background-position: top;
 }

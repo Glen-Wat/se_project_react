@@ -1,0 +1,93 @@
+.delete__modal-container {
+  position: relative;
+  width: 670px;
+  height: 280px;
+  background-color: white;
+  border-radius: 20px;
+}
+
+.delete__modal-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.delete__modal-close {
+  background: transparent;
+  border: none;
+  position: absolute;
+  padding: 0;
+  max-width: 16px;
+  max-height: 16px;
+  top: 20px;
+  right: 20px;
+  width: 100%;
+  cursor: pointer;
+}
+
+.delete__warning-container {
+  margin-bottom: 40px;
+  padding: 0 120px;
+}
+
+.delete__modal-warning {
+  text-align: center;
+  font-family: "Cabinet Grotesk";
+  font-style: normal;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 20px;
+  color: #000000;
+  margin: 0;
+}
+
+.delete__modal-actions {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 20px;
+}
+
+.modal__button {
+  font-family: "Cabinet Grotesk";
+  font-size: 16px;
+  line-height: 20px;
+  border: none;
+  cursor: pointer;
+}
+
+.delete__modal_button_cancel {
+  padding: 0;
+  background-color: transparent;
+  color: #000000;
+}
+
+.delete__modal_button_confirm {
+  padding: 0;
+  background-color: transparent;
+  color: #ff4d00;
+}
+
+.delete__modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal__delete-btn {
+  font-family: Cabinet Grotesk;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: 0%;
+  color: #ff4d00;
+  background: transparent;
+  border: none;
+}

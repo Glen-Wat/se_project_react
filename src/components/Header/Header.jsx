@@ -1,15 +1,23 @@
 import { Link } from "react-router-dom";
-
+import React from "react";
 import "./Header.css";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import logo from "../../assets/logo.svg";
-import avatar from "../../assets/avatar.png";
 
-function Header({ handleAddClick, weatherData }) {
+function Header({
+  handleAddClick,
+  weatherData,
+  handleLogin,
+  handleRegisterModal,
+  isLoggedIn,
+  handleLogout,
+  currentUser,
+}) {
   const currentDate = new Date().toLocaleString("default", {
     month: "long",
     day: "numeric",
   });
+
   return (
     <header className="header">
       <Link to="/">
@@ -18,20 +26,49 @@ function Header({ handleAddClick, weatherData }) {
       <p className="header__date-location">
         {currentDate}, {weatherData.city}
       </p>
-      <ToggleSwitch />
-      <button
-        onClick={handleAddClick}
-        type="button"
-        className="header__add-clothes-btn"
-      >
-        + Add clothes
-      </button>
-      <Link to="/profile" className="header__link">
-        <div className="header__user-container">
-          <p className="header__username">Terrence Tegegne</p>
-          <img src={avatar} alt="Terrence Tegegne" className="header__avatar" />
-        </div>
-      </Link>
+      <div className="header__nav-container">
+        <ToggleSwitch />
+        {isLoggedIn ? (
+          <>
+            <button
+              className="header__add-clothes-btn"
+              onClick={handleAddClick}
+            >
+              + Add clothes
+            </button>
+
+            <Link to="/profile" className="header__profile-link">
+              <span className="header__username">{currentUser.name}</span>
+            </Link>
+            {currentUser.avatar ? (
+              <img
+                src={currentUser.avatar}
+                alt={currentUser.name}
+                className="header__avatar"
+              />
+            ) : (
+              <div className="header__avatar-placeholder">
+                {currentUser.name?.charAt(0).toUpperCase()}
+              </div>
+            )}
+          </>
+        ) : (
+          <div className="header__auth">
+            <button
+              className="button header__auth-button header__auth-button_signup"
+              onClick={handleRegisterModal}
+            >
+              Sign Up
+            </button>
+            <button
+              className="button header__auth-button header__auth-button_login"
+              onClick={handleLogin}
+            >
+              Log In
+            </button>
+          </div>
+        )}
+      </div>
     </header>
   );
 }
