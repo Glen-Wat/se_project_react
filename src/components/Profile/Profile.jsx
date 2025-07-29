@@ -16,8 +16,8 @@ function Profile({
     <div className="profile">
       <section className="profile__sidebar">
         <SideBar
-          avatar={currentUser.avatar}
-          name={currentUser.name}
+          avatar={currentUser?.avatar}
+          name={currentUser?.name}
           onEditProfile={onEditProfile}
           handleLogout={handleLogout}
         />

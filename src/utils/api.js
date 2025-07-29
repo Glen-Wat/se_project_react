@@ -1,19 +1,19 @@
 const baseUrl = "http://localhost:3001";
 
+export function checkResponse(res) {
+  if (res.ok) {
+    return res.json();
+  }
+  return Promise.reject(`Error: ${res.status}`);
+}
+
 function getProtectedData(token) {
   return fetch(`${baseUrl}/protected-endpoint`, {
     headers: {
       "Content-Type": "application/json",
       authorization: `Bearer ${token}`,
     },
-  }).then((res) => (res.ok ? res.json() : Promise.reject(res.status)));
-}
-
-export function checkResponse(res) {
-  if (res.ok) {
-    return res.json();
-  }
-  return Promise.reject(`Error: ${res.status}`);
+  }).then(checkResponse);
 }
 
 function request(url, options) {

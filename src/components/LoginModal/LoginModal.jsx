@@ -29,7 +29,7 @@ export default function LoginModal({
         onClose={onClose}
         onSubmit={handleSubmit}
         contentClassName="modal__content modal__content--login"
-        actions={
+        action={
           <button
             type="button"
             className="modal__switch-button"

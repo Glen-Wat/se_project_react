@@ -6,9 +6,9 @@ import ItemCard from "../ItemCard/ItemCard";
 function ClothesSection({ clothingItems, onCardClick, isOpen, onCardLike }) {
   const currentUser = useContext(CurrentUserContext);
 
-  const userCards = clothingItems.filter(
-    (item) => currentUser._id && item.owner === currentUser._id
-  );
+  const userCards = currentUser
+    ? clothingItems.filter((item) => item?.owner === currentUser._id)
+    : [];
 
   return (
     <div className="clothes-section">

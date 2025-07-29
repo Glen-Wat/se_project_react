@@ -60,24 +60,37 @@ function App() {
     setActiveModal("");
   };
 
-  const handleLogin = useCallback(({ email, password }) => {
-    return signin({ email, password }).then((data) => {
-      if (data.token) {
-        localStorage.setItem("jwt", data.token);
-        setIsLoggedIn(true);
-        setActiveModal("");
-        navigate("/profile");
-      } else {
-        return Promise.reject();
-      }
-    });
-  }, []);
+  const handleLogin = useCallback(
+    ({ email, password }) => {
+      return signin({ email, password })
+        .then((data) => {
+          if (!data.token) {
+            return Promise.reject(new Error("No token received"));
+          }
+
+          localStorage.setItem("jwt", data.token);
+
+          return checkToken({ token: data.token }).then((user) => {
+            setCurrentUser(user);
+            setIsLoggedIn(true);
+            setActiveModal("");
+            navigate("/profile");
+          });
+        })
+        .catch((err) => {
+          console.error("Login error:", err);
+          setIsLoggedIn(false);
+          setCurrentUser(null);
+        });
+    },
+    [navigate]
+  );
 
   const handleLogout = () => {
     console.log("Logging out...");
     localStorage.removeItem("jwt");
     setIsLoggedIn(false);
-    setCurrentUser({});
+    setCurrentUser(null);
     setActiveModal("");
   };
 
@@ -104,7 +117,7 @@ function App() {
 
     addItem({ name, imageUrl, weather }, token)
       .then((newItem) => {
-        setClothingItems((prevItems) => [newItem.data, ...prevItems]);
+        setClothingItems((prevItems) => [newItem, ...prevItems]);
         closeModal();
       })
       .catch(console.error)
@@ -155,12 +168,18 @@ function App() {
 
     likeAction
       .then((updatedCard) => {
+        if (!updatedCard || !updatedCard._id) {
+          console.error("Invalid card returned:", updatedCard);
+          return;
+        }
         const correctedCard = {
           ...updatedCard,
-          likes: updatedCard.likes[0], // Take the first element to flatten it
+          likes: [...updatedCard.likes],
         };
         setClothingItems((cards) =>
-          cards.map((item) => (item._id === id ? correctedCard : item))
+          cards.map((item) =>
+            item._id === updatedCard._id ? correctedCard : item
+          )
         );
       })
       .catch((err) => console.log(err));
@@ -193,16 +212,17 @@ function App() {
           setIsLoggedIn(true);
           setCurrentUser(user);
           setIsAuthChecked(true);
+          navigate("/profile");
         })
         .catch(() => {
-          setIsLoggedIn(false);
-          setCurrentUser({});
           localStorage.removeItem("jwt");
+          setIsLoggedIn(false);
+          setCurrentUser(null);
           setIsAuthChecked(true);
         });
     } else {
       setIsLoggedIn(false);
-      setCurrentUser({});
+      setCurrentUser(null);
       setIsAuthChecked(true);
     }
   }, []);

@@ -24,7 +24,7 @@ function Header({
         <img className="header__logo" alt="WTWR" src={logo} />
       </Link>
       <p className="header__date-location">
-        {currentDate}, {weatherData.city}
+        {currentDate}, {weatherData?.city}
       </p>
       <div className="header__nav-container">
         <ToggleSwitch />
@@ -38,17 +38,17 @@ function Header({
             </button>
 
             <Link to="/profile" className="header__profile-link">
-              <span className="header__username">{currentUser.name}</span>
+              <span className="header__username">{currentUser?.name}</span>
             </Link>
-            {currentUser.avatar ? (
+            {currentUser?.avatar ? (
               <img
-                src={currentUser.avatar}
-                alt={currentUser.name}
+                src={currentUser?.avatar}
+                alt={currentUser?.name}
                 className="header__avatar"
               />
             ) : (
               <div className="header__avatar-placeholder">
-                {currentUser.name?.charAt(0).toUpperCase()}
+                {currentUser?.name?.charAt(0).toUpperCase()}
               </div>
             )}
           </>
