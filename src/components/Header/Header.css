@@ -44,6 +44,7 @@
   height: 40px;
   left: 1320px;
   border-width: 1px;
+  border-radius: 50%;
 }
 
 .header__avatar-placeholder {

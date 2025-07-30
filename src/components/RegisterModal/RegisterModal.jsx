@@ -22,13 +22,13 @@ export default function RegisterModal({
     <div className={`modal${isOpen ? " modal_opened" : ""}`}>
       <ModalWithForm
         title="Sign Up"
-        buttonText="Next"
+        buttonText="Sign Up"
         disabled={!email || !password || !name}
         isOpen={isOpen}
         onClose={onClose}
         onSubmit={handleSubmit}
         contentClassName="modal__content modal__content--signup"
-        actions={
+        action={
           <button
             type="button"
             className="modal__switch-button"

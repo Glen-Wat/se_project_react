@@ -33,7 +33,8 @@ function App() {
     condition: "",
     isDay: false,
   });
-  const [clothingItems, setClothingItems] = useState(defaultClothingItems);
+  const [clothingItems, setClothingItems] = useState([]);
+  const [userItems, setUserItems] = useState([]);
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState({});
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
@@ -61,27 +62,30 @@ function App() {
   };
 
   const handleLogin = useCallback(
-    ({ email, password }) => {
-      return signin({ email, password })
-        .then((data) => {
-          if (!data.token) {
-            return Promise.reject(new Error("No token received"));
-          }
+    async ({ email, password }) => {
+      try {
+        const data = await signin({ email, password });
 
-          localStorage.setItem("jwt", data.token);
+        if (!data.token || !data.user) {
+          throw new Error("No token or user received");
+        }
 
-          return checkToken({ token: data.token }).then((user) => {
-            setCurrentUser(user);
-            setIsLoggedIn(true);
-            setActiveModal("");
-            navigate("/profile");
-          });
-        })
-        .catch((err) => {
-          console.error("Login error:", err);
-          setIsLoggedIn(false);
-          setCurrentUser(null);
+        const { token, user } = data;
+
+        localStorage.setItem("jwt", token);
+        setCurrentUser(user);
+        setIsLoggedIn(true);
+
+        return getItems(token).then((items) => {
+          setClothingItems(items);
+          closeModal();
+          navigate("/profile");
         });
+      } catch (err) {
+        console.error("Login error:", err);
+        setIsLoggedIn(false);
+        setCurrentUser(null);
+      }
     },
     [navigate]
   );
@@ -91,7 +95,9 @@ function App() {
     localStorage.removeItem("jwt");
     setIsLoggedIn(false);
     setCurrentUser(null);
-    setActiveModal("");
+    setUserItems([]);
+    setClothingItems(defaultClothingItems);
+    closeModal();
   };
 
   const handleDeleteCard = (cardId) => {
@@ -133,8 +139,13 @@ function App() {
   const handleRegistration = (userData) => {
     signup(userData)
       .then(() => {
-        setActiveModal("");
-        handleLogin({ email: userData.email, password: userData.password });
+        closeModal();
+        return handleLogin({
+          email: userData.email,
+          password: userData.password,
+        });
+      })
+      .then(() => {
         navigate("/profile");
       })
       .catch(console.error);
@@ -194,16 +205,20 @@ function App() {
       .catch(console.error);
   }, []);
 
-  useEffect(() => {
-    getItems()
-      .then((data) => {
-        console.log(data);
-        setClothingItems(data);
-      })
-      .catch(console.error);
-  }, []);
-
   const [isAuthChecked, setIsAuthChecked] = useState(false);
+
+  useEffect(() => {
+    if (isAuthChecked && isLoggedIn) {
+      getItems()
+        .then((data) => {
+          setClothingItems(data);
+        })
+        .catch(console.error);
+    } else if (isAuthChecked && !isLoggedIn) {
+      setClothingItems(defaultClothingItems);
+    }
+  }, [isAuthChecked, isLoggedIn]);
+
   useEffect(() => {
     const token = localStorage.getItem("jwt");
     if (token) {
@@ -242,7 +257,6 @@ function App() {
                   handleLogin={() => setActiveModal("login")}
                   handleRegisterModal={() => setActiveModal("register")}
                   isLoggedIn={isLoggedIn}
-                  currentUser={currentUser}
                 />
                 <div className="page__main">
                   <Routes>
@@ -255,6 +269,7 @@ function App() {
                           clothingItems={clothingItems}
                           handleAddClick={handleAddClick}
                           onCardLike={handleCardLike}
+                          isLoggedIn={isLoggedIn}
                         />
                       }
                     />
@@ -264,13 +279,13 @@ function App() {
                         <ProtectedRoute isLoggedIn={isLoggedIn}>
                           {isAuthChecked ? (
                             <Profile
-                              currentUser={currentUser}
                               onCardClick={handleCardClick}
                               clothingItems={clothingItems}
                               isOpen={handleAddClick}
                               onEditProfile={handleEditProfileModal}
                               onCardLike={handleCardLike}
                               handleLogout={handleLogout}
+                              isLoggedIn={isLoggedIn}
                             />
                           ) : (
                             <div>Loading...</div>
@@ -318,7 +333,6 @@ function App() {
           isOpen={isEditprofileOpen}
           onClose={() => setIsEditProfileOpen(false)}
           onUpdateUser={handleEditProfileSubmit}
-          currentUser={currentUser}
         />
       </CurrentTemperatureUnitContext.Provider>
     </CurrentUserContext.Provider>

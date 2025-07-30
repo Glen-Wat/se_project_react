@@ -37,5 +37,4 @@ function ClothesSection({ clothingItems, onCardClick, isOpen, onCardLike }) {
     </div>
   );
 }
-
 export default ClothesSection;

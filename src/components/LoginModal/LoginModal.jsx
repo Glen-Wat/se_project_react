@@ -35,7 +35,7 @@ export default function LoginModal({
             className="modal__switch-button"
             onClick={onSwitchToRegister}
           >
-            or Register
+            or Sign Up
           </button>
         }
       >

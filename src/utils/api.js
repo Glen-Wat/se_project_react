@@ -16,7 +16,7 @@ function getProtectedData(token) {
   }).then(checkResponse);
 }
 
-function request(url, options) {
+function request(url, options = {}) {
   return fetch(url, options).then(checkResponse);
 }
 
@@ -25,14 +25,14 @@ function getItems() {
 }
 
 function addItem(itemData, token) {
-  return fetch(`${baseUrl}/items`, {
+  return request(`${baseUrl}/items`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(itemData),
-  }).then(checkResponse);
+  });
 }
 
 function deleteCard(id, token) {
