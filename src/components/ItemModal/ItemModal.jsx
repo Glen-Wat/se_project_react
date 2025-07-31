@@ -4,7 +4,13 @@ import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 function ItemModal({ activeModal, onClose, card, onCardDelete }) {
   const currentUser = useContext(CurrentUserContext);
-  const isOwn = card?.owner === currentUser?._id;
+  const isOwn = Boolean(
+    currentUser?._id &&
+      (card?.owner === currentUser._id ||
+        card?.owner?._id === currentUser._id ||
+        !card?.owner) // Allow delete if no owner set
+  );
+
   return (
     <div
       className={`modal ${activeModal === "preview" ? "modal_opened" : ""} `}
@@ -23,7 +29,7 @@ function ItemModal({ activeModal, onClose, card, onCardDelete }) {
         <div className="modal__footer">
           <h2 className="modal__caption">{card.name}</h2>
           <p className="modal__weather">Weather: {card.weather}</p>
-          {currentUser && isOwn && (
+          {isOwn && (
             <button
               className="modal-close modal__delete-item_btn"
               type="button"
