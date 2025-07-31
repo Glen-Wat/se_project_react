@@ -41,6 +41,7 @@ function App() {
   const [cardToDelete, setCardToDelete] = useState(null);
   const [currentUser, setCurrentUser] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [isItemsLoading, setIsItemsLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isEditprofileOpen, setIsEditProfileOpen] = useState("");
   const handleToggleSwitchChange = () => {
@@ -76,15 +77,23 @@ function App() {
         setCurrentUser(user);
         setIsLoggedIn(true);
 
-        return getItems(token).then((items) => {
-          setClothingItems(items);
-          closeModal();
-          navigate("/profile");
-        });
+        setIsItemsLoading(true);
+
+        const userItems = await getItems(token);
+        setClothingItems(
+          userItems.length > 0 ? userItems : defaultClothingItems
+        );
+
+        setIsItemsLoading(false);
+
+        closeModal();
+        navigate("/profile");
       } catch (err) {
         console.error("Login error:", err);
         setIsLoggedIn(false);
         setCurrentUser(null);
+        setClothingItems(defaultClothingItems);
+        setIsItemsLoading(false);
       }
     },
     [navigate]
@@ -205,19 +214,19 @@ function App() {
       .catch(console.error);
   }, []);
 
-  const [isAuthChecked, setIsAuthChecked] = useState(false);
-
   useEffect(() => {
-    if (isAuthChecked && isLoggedIn) {
-      getItems()
-        .then((data) => {
-          setClothingItems(data);
-        })
-        .catch(console.error);
-    } else if (isAuthChecked && !isLoggedIn) {
-      setClothingItems(defaultClothingItems);
-    }
-  }, [isAuthChecked, isLoggedIn]);
+    getItems()
+      .then((items) => {
+        const normalized = items.map((item) => ({
+          ...item,
+          link: item.link || item.imageUrl || item.image, // normalize for frontend
+        }));
+        setClothingItems(normalized);
+      })
+      .catch(console.error);
+  }, []);
+
+  const [isAuthChecked, setIsAuthChecked] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("jwt");
@@ -227,21 +236,19 @@ function App() {
           setIsLoggedIn(true);
           setCurrentUser(user);
           setIsAuthChecked(true);
-          navigate("/profile");
         })
         .catch(() => {
-          localStorage.removeItem("jwt");
           setIsLoggedIn(false);
-          setCurrentUser(null);
+          setCurrentUser({});
+          localStorage.removeItem("jwt");
           setIsAuthChecked(true);
         });
     } else {
       setIsLoggedIn(false);
-      setCurrentUser(null);
+      setCurrentUser({});
       setIsAuthChecked(true);
     }
-  }, []);
-
+  }, [isLoggedIn]);
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <CurrentTemperatureUnitContext.Provider
@@ -279,8 +286,8 @@ function App() {
                         <ProtectedRoute isLoggedIn={isLoggedIn}>
                           {isAuthChecked ? (
                             <Profile
-                              onCardClick={handleCardClick}
                               clothingItems={clothingItems}
+                              onCardClick={handleCardClick}
                               isOpen={handleAddClick}
                               onEditProfile={handleEditProfileModal}
                               onCardLike={handleCardLike}
