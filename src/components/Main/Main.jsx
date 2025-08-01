@@ -3,9 +3,14 @@ import WeatherCard from "../WeatherCard/WeatherCard";
 import ItemCard from "../ItemCard/ItemCard";
 import { useContext } from "react";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 function Main({ weatherData, onCardClick, clothingItems, onCardLike }) {
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
+
+  const currentUser = useContext(CurrentUserContext);
+  const isUserItem = (item) =>
+    item.owner === currentUser?._id || item.owner?._id === currentUser?._id;
   return (
     <main className="main">
       <WeatherCard weatherData={weatherData} />
@@ -19,7 +24,12 @@ function Main({ weatherData, onCardClick, clothingItems, onCardLike }) {
         </p>
         <ul className="cards__list">
           {clothingItems
-            ?.filter((item) => item.weather === weatherData?.type)
+            ?.filter((item) => {
+              const matchesWeather = item.weather === weatherData?.type;
+              const isOwnedByUser = isUserItem(item);
+              const isDefault = !item.owner;
+              return matchesWeather && (isDefault || isOwnedByUser);
+            })
             .map((item) => {
               return (
                 <ItemCard

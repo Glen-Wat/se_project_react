@@ -214,7 +214,10 @@ function App() {
       .catch(console.error);
   }, []);
 
+  const [isAuthChecked, setIsAuthChecked] = useState(false);
+
   useEffect(() => {
+    if (!isAuthChecked) return;
     getItems()
       .then((items) => {
         const normalized = items.map((item) => ({
@@ -224,9 +227,7 @@ function App() {
         setClothingItems(normalized);
       })
       .catch(console.error);
-  }, []);
-
-  const [isAuthChecked, setIsAuthChecked] = useState(false);
+  }, [isAuthChecked]);
 
   useEffect(() => {
     const token = localStorage.getItem("jwt");

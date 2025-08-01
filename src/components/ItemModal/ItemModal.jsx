@@ -8,7 +8,7 @@ function ItemModal({ activeModal, onClose, card, onCardDelete }) {
     currentUser?._id &&
       (card?.owner === currentUser._id ||
         card?.owner?._id === currentUser._id ||
-        !card?.owner) // Allow delete if no owner set
+        !card?.owner)
   );
 
   return (
