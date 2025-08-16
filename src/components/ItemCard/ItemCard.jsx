@@ -18,6 +18,7 @@ function ItemCard({ item, onCardClick, onCardLike }) {
   };
 
   const handleLike = () => {
+    if (!currentUser?._id || item.isDefault) return;
     console.log("Like button clicked!");
     onCardLike({ id: item._id, isLiked });
   };
@@ -31,7 +32,7 @@ function ItemCard({ item, onCardClick, onCardLike }) {
         src={item.imageUrl || item.link}
         alt={item.name}
       />
-      {currentUser ? (
+      {currentUser._id ? (
         <button
           className={itemLikeButtonClassName}
           onClick={handleLike}

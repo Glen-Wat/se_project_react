@@ -181,6 +181,11 @@ function App() {
   };
 
   const handleCardLike = ({ id, isLiked }) => {
+    if (!id || String(id).length !== 24) {
+      console.warn("Skipping like for placeholder card with id:", id);
+      return;
+    }
+
     const token = localStorage.getItem("jwt");
     const likeAction = !isLiked
       ? addCardLike(id, token)

@@ -11,7 +11,7 @@ function getProtectedData(token) {
   return fetch(`${baseUrl}/protected-endpoint`, {
     headers: {
       "Content-Type": "application/json",
-      authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
   }).then(checkResponse);
 }
@@ -22,9 +22,10 @@ function request(url, options = {}) {
 
 function getItems(token) {
   return request(`${baseUrl}/items`, {
+    method: "GET",
     headers: {
-      Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
   });
 }
@@ -34,9 +35,13 @@ function addItem(itemData, token) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(itemData),
+    body: JSON.stringify({
+      name: itemData.name,
+      imageUrl: itemData.imageUrl || itemData.link,
+      weather: itemData.weather,
+    }),
   });
 }
 
@@ -45,7 +50,7 @@ function deleteCard(id, token) {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
-      authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
       id,
@@ -58,7 +63,7 @@ const addCardLike = (id, token) => {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
-      authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
   }).then(checkResponse);
 };
@@ -68,7 +73,7 @@ const removeCardLike = (id, token) => {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
-      authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
   }).then(checkResponse);
 };
