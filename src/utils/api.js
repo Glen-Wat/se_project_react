@@ -1,14 +1,20 @@
-const baseUrl = "http://localhost:3001";
+const BASE_URL =
+  process.env.NODE_ENV === "production"
+    ? "https://api.projwtwr.ignorelist.com"
+    : "http://localhost:3001";
 
 export function checkResponse(res) {
   if (res.ok) {
     return res.json();
   }
-  return Promise.reject(`Error: ${res.status}`);
-}
 
+  return res.json().then((err) => {
+    console.error("Backend validation error:", err);
+    return Promise.reject(err.message || `Error: ${res.status}`);
+  });
+}
 function getProtectedData(token) {
-  return fetch(`${baseUrl}/protected-endpoint`, {
+  return fetch(`${BASE_URL}/protected-endpoint`, {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
@@ -20,37 +26,35 @@ function request(url, options = {}) {
   return fetch(url, options).then(checkResponse);
 }
 
-function getItems(token) {
-  return request(`${baseUrl}/items`, {
-    method: "GET",
+const getItems = () => {
+  return request(`${BASE_URL}/items`, {
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
     },
   });
-}
+};
 
-function addItem(itemData, token) {
-  return request(`${baseUrl}/items`, {
+function addItem({ name, weather, imageUrl }, token) {
+  return request(`${BASE_URL}/items`, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      name: itemData.name,
-      imageUrl: itemData.imageUrl || itemData.link,
-      weather: itemData.weather,
+      name,
+      imageUrl,
+      weather,
     }),
   });
 }
 
 function deleteCard(id, token) {
-  return fetch(`${baseUrl}/items/${id}`, {
+  return fetch(`${BASE_URL}/items/${id}`, {
     method: "DELETE",
     headers: {
-      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
       id,
@@ -59,7 +63,7 @@ function deleteCard(id, token) {
 }
 
 const addCardLike = (id, token) => {
-  return fetch(`${baseUrl}/items/${id}/likes`, {
+  return fetch(`${BASE_URL}/items/${id}/likes`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -69,7 +73,7 @@ const addCardLike = (id, token) => {
 };
 
 const removeCardLike = (id, token) => {
-  return fetch(`${baseUrl}/items/${id}/likes`, {
+  return fetch(`${BASE_URL}/items/${id}/likes`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
